@@ -2,6 +2,7 @@
   "expo": {
     "name": "study.io-frontend",
     "slug": "study.io-frontend",
+    "scheme": "study.io",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
