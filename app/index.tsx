@@ -1,45 +1,32 @@
-import { api } from "../src/lib/api";
+import { styled } from "nativewind";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
-import { makeRedirectUri } from "expo-auth-session";
-import { TouchableOpacity, View, Text } from "react-native";
+import { TouchableOpacity, View, Text, Image } from "react-native";
 
 import Logo from "../src/components/Logo";
+import GoogleLogo from '../src/assets/google.svg'
 import SignInForm from "../src/components/signIn/SignInForm";
 
-import * as Google from 'expo-auth-session/providers/google'
 import * as AuthSession from 'expo-auth-session'
-import * as SecureStore from 'expo-secure-store'
+import * as Google from 'expo-auth-session/providers/google'
 
 export default function App(){
 
   const router = useRouter()
 
-  const [, response, signInWithGoogle] = Google.useAuthRequest({
-    clientId: '75442975614-g3gdhejorkvi38j663id9n90844a31ob.apps.googleusercontent.com',
-    redirectUri: makeRedirectUri({ 
-      scheme: 'study.io'
-    }),
-    scopes: ['profile', 'email']
-  })
+  // const [, response, signInWithGoogle] = Google.useAuthRequest({
+  //   clientId: '75442975614-g3gdhejorkvi38j663id9n90844a31ob.apps.googleusercontent.com',
+  //   redirectUri: 'https://auth.expo.io/@matheus_motta_18/study.io-frontend',
+  //   scopes: ['profile', 'email']
+  // })
 
-  async function handleGoogleToken(access_token: string){
-    const tokenResponse = await api.post('/register', access_token)
+  // async function handleGoogleToken(access_token: string){
+    
+  // }
 
-    const { token } = tokenResponse.data
-
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}` 
-
-    await SecureStore.setItemAsync('token', token)
-
-    router.push('/home')
-  }
-
-  useEffect(() => {
-    if(response?.type === 'success' && response.authentication?.accessToken){
-      handleGoogleToken(response.authentication.accessToken)
-    }
-  }, [response])
+  // useEffect(() => {
+    
+  // }, [])
   
 
   return (
@@ -49,13 +36,14 @@ export default function App(){
 
         <SignInForm />
 
-        <View className="flex flex-row gap-x-1.5">
-          <Text className="text-white">Connect with</Text>
+        <TouchableOpacity className="bg-white w-full items-center justify-center space-x-2 p-2 flex-row" onPress={() => {}}>
+          <GoogleLogo 
+            width={20} 
+            height={20}
+          />
 
-          <TouchableOpacity onPress={() => signInWithGoogle()}>
-            <Text className="underline text-gray-600">Google</Text>
-          </TouchableOpacity>
-        </View>
+          <Text className="text-gray-400">Sign with Google</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
