@@ -25,7 +25,7 @@ export default function Layout(){
   }
 
   return (
-    <NativeBaseProvider>
+    <NativeBaseProvider isSSR={false}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name='index' redirect={isLogged}/>
         <Stack.Screen name='home' />
