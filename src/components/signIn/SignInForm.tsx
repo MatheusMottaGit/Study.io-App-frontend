@@ -5,7 +5,7 @@ import { TouchableOpacity, Text, View } from 'react-native'
 
 const SignInForm = () => {
   return (
-    <View className='flex flex-col gap-y-8 w-full'> 
+      <View className='flex flex-col gap-y-8 w-full'> 
         <Input 
           placeholder="Name..."
         />
@@ -19,7 +19,7 @@ const SignInForm = () => {
             sign-in
           </Text>
         </TouchableOpacity>
-    </View>
+      </View>
   )
 }
 
