@@ -1,6 +1,7 @@
 import { api } from "../src/lib/api";
 import { useEffect } from "react";
 import { useRouter } from "expo-router";
+import { makeRedirectUri } from "expo-auth-session";
 import { TouchableOpacity, View, Text, Image } from "react-native";
 
 import Logo from "../src/components/Logo";
@@ -14,11 +15,16 @@ export default function App(){
 
   const router = useRouter()
 
-  const [, response, signInWithGoogle] = Google.useAuthRequest({
-    clientId: '75442975614-g3gdhejorkvi38j663id9n90844a31ob.apps.googleusercontent.com',
-    redirectUri: 'https://auth.expo.io/@matheus_motta_18/study.io-frontend',
-    scopes: ['profile', 'email']
-  })
+  const [, response, signInWithGoogle] = Google.useAuthRequest(
+    {
+      clientId: '75442975614-g3gdhejorkvi38j663id9n90844a31ob.apps.googleusercontent.com',
+      scopes: ['profile', 'email'],
+      responseType: 'code',
+      redirectUri: makeRedirectUri({
+        scheme: 'nlwspacetime',
+      }),
+    },
+  )
 
   async function handleGoogleToken(code: string){
     const response = await api.post('/register', { code })
