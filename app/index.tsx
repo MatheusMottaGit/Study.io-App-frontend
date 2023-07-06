@@ -22,9 +22,17 @@ export default function App(){
     {
       clientId: '75442975614-g3gdhejorkvi38j663id9n90844a31ob.apps.googleusercontent.com',
       scopes: ['profile', 'email'],
-      redirectUri: 'https://auth.expo.io/@matheus_motta_18/study.io-frontend',
+      redirectUri: 'https://auth.expo.io/@matheus_motta_18/study.io-frontend'
     },
   )
+
+  async function signIn(){
+    try {
+      await promptAsync()
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   async function signInWithGoogle(access_token: string){
     const response = await api.post('/register', { access_token })
@@ -35,7 +43,7 @@ export default function App(){
 
     await SecureStore.setItemAsync('token', token)
 
-    router.push('/home')
+    router.push('app_routes/home')
   }
 
   useEffect(() => {
@@ -47,12 +55,10 @@ export default function App(){
 
   return (
     <View className="flex-1 items-center justify-center bg-green-200 p-4">
-      <View className="w-2/3 h-2/3 flex flex-col items-center justify-center gap-y-8"> 
+      <View className="w-2/3 h-2/3 flex flex-col items-center justify-between gap-y-8"> 
         <Logo />
-
-        <SignInForm />
-
-        <TouchableOpacity className="bg-white w-full items-center justify-center space-x-2 p-2 flex-row" onPress={() => promptAsync({ useProxy: false })}>
+        
+        <TouchableOpacity className="bg-white w-full items-center justify-center space-x-2 p-2 flex-row" onPress={() => signIn()}>
           <GoogleLogo 
             width={20} 
             height={20}
